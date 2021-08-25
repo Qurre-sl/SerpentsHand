@@ -10,15 +10,15 @@ namespace SerpentsHand
         public override int Priority => 1000;
         public override string Developer => "fydne";
         public override string Name => "Serpent's Hand";
-        public override Version Version => new Version(1, 0, 0);
-        public override Version NeededQurreVersion => new Version(1, 7, 6);
+        public override Version Version => new Version(1, 0, 1);
+        public override Version NeededQurreVersion => new Version(1, 8, 3);
         public override void Enable() => RegisterEvents();
         public override void Disable() => UnregisterEvents();
         #endregion
         #region Events
         private void RegisterEvents()
         {
-            Enabled = Plugin.Config.GetBool("SerpentsHand_enable", true);
+            Enabled = Config.GetBool("SerpentsHand_enable", true);
             if (!Enabled) return;
             Cfg.Reload();
             EventHandlers = new EventHandlers();

@@ -1,14 +1,9 @@
 ﻿using MEC;
 using Qurre.API;
 using Qurre.API.Events;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
-
 namespace SerpentsHand
 {
     public class EventHandlers
@@ -24,6 +19,7 @@ namespace SerpentsHand
 		private string Tag => " Serpent's Hand";
 		public void SpawnPlayer(Player sh)
 		{
+			Vector3 shSpawnPos = new Vector3(85.293f, 988.7609f, -68.15958f);
 			sh.Tag += Tag;
 			sh.Role = RoleType.Tutorial;
 			sh.ClearBroadcasts();
@@ -40,7 +36,14 @@ namespace SerpentsHand
 				}
 				sh.UnitName = Cfg.UnitName;
 			});
-			Timing.CallDelayed(0.3f, () => sh.Position = new Vector3(85.293f, 988.7609f, -68.15958f));
+			Timing.CallDelayed(0.3f, () => sh.Position = shSpawnPos);
+			Timing.CallDelayed(1.0f, () => CheckPos(sh));
+			Timing.CallDelayed(1.3f, () => CheckPos(sh));
+			Timing.CallDelayed(1.8f, () => CheckPos(sh));
+			void CheckPos(Player pl)
+			{
+				if (Vector3.Distance(pl.Position, shSpawnPos) > 10) sh.Position = shSpawnPos;
+			}
 		}
 
 
@@ -89,7 +92,7 @@ namespace SerpentsHand
 			List<Vector3> tp = new List<Vector3>();
 			foreach (GameObject _go in GameObject.FindGameObjectsWithTag("PD_EXIT"))
 				tp.Add(_go.transform.position);
-			var pos = tp[UnityEngine.Random.Range(0, tp.Count)];
+			var pos = tp[Random.Range(0, tp.Count)];
 			pos.y += 2f;
 			ev.Player.ReferenceHub.playerMovementSync.AddSafeTime(2f, false);
 			ev.Player.Position = pos;
