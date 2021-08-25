@@ -27,6 +27,11 @@ namespace SerpentsHand
 			Timing.CallDelayed(0.5f, () =>
 			{
 				sh.ClearInventory();
+				sh.AddItem(ItemType.Ammo12gauge, 3);
+				sh.AddItem(ItemType.Ammo44cal, 3);
+				sh.AddItem(ItemType.Ammo556x45, 3);
+				sh.AddItem(ItemType.Ammo762x39, 3);
+				sh.AddItem(ItemType.Ammo9x19, 3);
 				for (int i = 0; i < Cfg.SpawnItems.Count; i++)
 					sh.AddItem((ItemType)Cfg.SpawnItems[i]);
 				if (sh.Role == RoleType.Tutorial)
@@ -134,11 +139,13 @@ namespace SerpentsHand
 		{
 			Player scp035 = null;
 			try { scp035 = Player.List.Where(x => x.Tag.Contains(" scp035")).First(); } catch { }
-			bool MTFAlive = Player.List.Where(x => x.Team == Team.MTF).ToList().Count - (scp035 != null && scp035?.Team == Team.MTF ? 1 : 0) > 0;
-			bool CiAlive = Player.List.Where(x => x.Team == Team.CHI).ToList().Count - (scp035 != null && scp035?.Team == Team.CHI ? 1 : 0) > 0;
+			Player scp343ByKnuckles = null;
+			try { scp343ByKnuckles = Player.List.Where(x => x.Tag.Contains("scp343-knuckles")).First(); } catch { }
+			bool MTFAlive = Player.List.Where(x => x.Team == Team.MTF).ToList().Count - (scp035 != null && scp035?.Team == Team.MTF ? 1 : 0) - (scp343ByKnuckles != null && scp343ByKnuckles?.Team == Team.MTF ? 1 : 0) > 0;
+			bool CiAlive = Player.List.Where(x => x.Team == Team.CHI).ToList().Count - (scp035 != null && scp035?.Team == Team.CHI ? 1 : 0) - (scp343ByKnuckles != null && scp343ByKnuckles?.Team == Team.CHI ? 1 : 0) > 0;
 			bool ScpAlive = Player.List.Where(x => x.Team == Team.SCP).ToList().Count + (scp035 != null && scp035?.Role != RoleType.Spectator ? 1 : 0) > 0;
-			bool DClassAlive = Player.List.Where(x => x.Team == Team.CDP).ToList().Count - (scp035 != null && scp035?.Team == Team.CDP ? 1 : 0) > 0;
-			bool ScientistsAlive = Player.List.Where(x => x.Team == Team.RSC).ToList().Count - (scp035 != null && scp035?.Team == Team.RSC ? 1 : 0) > 0;
+			bool DClassAlive = Player.List.Where(x => x.Team == Team.CDP).ToList().Count - (scp035 != null && scp035?.Team == Team.CDP ? 1 : 0) - (scp343ByKnuckles != null && scp343ByKnuckles?.Team == Team.CDP ? 1 : 0) > 0;
+			bool ScientistsAlive = Player.List.Where(x => x.Team == Team.RSC).ToList().Count - (scp035 != null && scp035?.Team == Team.RSC ? 1 : 0) - (scp343ByKnuckles != null && scp343ByKnuckles?.Team == Team.RSC ? 1 : 0) > 0;
 			bool SHAlive = Player.List.Where(x => x.Tag.Contains(Tag)).ToList().Count > 0;
 			ev.RoundEnd = false;
 			if ((SHAlive || ScpAlive) && !MTFAlive && !DClassAlive && !ScientistsAlive)
