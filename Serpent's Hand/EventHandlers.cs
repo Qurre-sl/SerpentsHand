@@ -104,13 +104,11 @@ namespace SerpentsHand
 		}
 		internal void PocketEnter(PocketDimensionEnterEvent ev)
 		{
-			if (!ev.Player.Tag.Contains(Tag)) return;
-			ev.Allowed = false;
+			if (ev.Player.Tag.Contains(Tag)) ev.Allowed = false;
 		}
 		internal void AntiScpAttack(ScpAttackEvent ev)
 		{
-			if (!ev.Target.Tag.Contains(Tag)) return;
-			ev.Allowed = false;
+			if (ev.Target.Tag.Contains(Tag)) ev.Allowed = false;
 		}
 		internal void Damage(DamageEvent ev)
 		{
