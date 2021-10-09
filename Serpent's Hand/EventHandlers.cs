@@ -90,7 +90,7 @@ namespace SerpentsHand
 				SpawnSquad();
 			}
 		}
-		internal void PocketFail(PocketDimensionFailEscapeEvent ev)
+		internal void PocketFail(PocketFailEscapeEvent ev)
         {
 			if (!ev.Player.Tag.Contains(Tag)) return;
 			ev.Allowed = false;
@@ -102,7 +102,7 @@ namespace SerpentsHand
 			ev.Player.ReferenceHub.playerMovementSync.AddSafeTime(2f, false);
 			ev.Player.Position = pos;
 		}
-		internal void PocketEnter(PocketDimensionEnterEvent ev)
+		internal void PocketEnter(PocketEnterEvent ev)
 		{
 			if (ev.Player.Tag.Contains(Tag)) ev.Allowed = false;
 		}

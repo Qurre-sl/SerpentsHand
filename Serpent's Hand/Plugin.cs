@@ -10,8 +10,8 @@ namespace SerpentsHand
         public override int Priority => 1000;
         public override string Developer => "fydne";
         public override string Name => "Serpent's Hand";
-        public override Version Version => new Version(1, 0, 3);
-        public override Version NeededQurreVersion => new Version(1, 8, 4);
+        public override Version Version => new Version(1, 0, 4);
+        public override Version NeededQurreVersion => new Version(1, 9, 0);
         public override void Enable() => RegisterEvents();
         public override void Disable() => UnregisterEvents();
         #endregion
@@ -22,11 +22,11 @@ namespace SerpentsHand
             if (!Enabled) return;
             Cfg.Reload();
             EventHandlers = new EventHandlers();
-            Qurre.Events.Round.WaitingForPlayers += EventHandlers.Waiting;
+            Qurre.Events.Round.Waiting += EventHandlers.Waiting;
             Qurre.Events.Server.SendingRA += EventHandlers.Ra;
             Qurre.Events.Round.TeamRespawn += EventHandlers.TeamRespawn;
-            Qurre.Events.Scp106.PocketDimensionFailEscape += EventHandlers.PocketFail;
-            Qurre.Events.Scp106.PocketDimensionEnter += EventHandlers.PocketEnter;
+            Qurre.Events.Scp106.PocketFailEscape += EventHandlers.PocketFail;
+            Qurre.Events.Scp106.PocketEnter += EventHandlers.PocketEnter;
             Qurre.Events.Player.ScpAttack += EventHandlers.AntiScpAttack;
             Qurre.Events.Player.Damage += EventHandlers.Damage;
             Qurre.Events.Player.Dead += EventHandlers.Dead;
@@ -38,11 +38,11 @@ namespace SerpentsHand
         private void UnregisterEvents()
         {
             if (!Enabled) return;
-            Qurre.Events.Round.WaitingForPlayers -= EventHandlers.Waiting;
+            Qurre.Events.Round.Waiting -= EventHandlers.Waiting;
             Qurre.Events.Server.SendingRA -= EventHandlers.Ra;
             Qurre.Events.Round.TeamRespawn -= EventHandlers.TeamRespawn;
-            Qurre.Events.Scp106.PocketDimensionFailEscape -= EventHandlers.PocketFail;
-            Qurre.Events.Scp106.PocketDimensionEnter -= EventHandlers.PocketEnter;
+            Qurre.Events.Scp106.PocketFailEscape -= EventHandlers.PocketFail;
+            Qurre.Events.Scp106.PocketEnter -= EventHandlers.PocketEnter;
             Qurre.Events.Player.ScpAttack -= EventHandlers.AntiScpAttack;
             Qurre.Events.Player.Damage -= EventHandlers.Damage;
             Qurre.Events.Player.Dead -= EventHandlers.Dead;
