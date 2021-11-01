@@ -6,14 +6,14 @@ using System.Linq;
 using UnityEngine;
 namespace SerpentsHand
 {
-    public class EventHandlers
-    {
+	public class EventHandlers
+	{
 		internal void SpawnSquad()
 		{
 			List<Player> list = Player.List.Where(x => x.Role == RoleType.Spectator && !x.Overwatch).ToList();
 			if (list.Count > 0) Map.Broadcast(Cfg.Map_Spawn_bc, Cfg.Map_Spawn_bc_time);
 			list.ShuffleList();
-			for(int i = 0; i < list.Count && i < Cfg.Max_players; i++)
+			for (int i = 0; i < list.Count && i < Cfg.Max_players; i++)
 				SpawnPlayer(list[i]);
 		}
 		private string Tag => " Serpent's Hand";
@@ -21,7 +21,9 @@ namespace SerpentsHand
 		{
 			Vector3 shSpawnPos = new Vector3(85.293f, 988.7609f, -68.15958f);
 			sh.Tag += Tag;
+			sh.BlockSpawnTeleport = true;
 			sh.Role = RoleType.Tutorial;
+			sh.Position = shSpawnPos;
 			sh.ClearBroadcasts();
 			sh.Broadcast(Cfg.Spawn_bc_time, Cfg.Spawn_bc);
 			Timing.CallDelayed(0.5f, () =>
@@ -42,13 +44,6 @@ namespace SerpentsHand
 				sh.UnitName = Cfg.UnitName;
 			});
 			Timing.CallDelayed(0.3f, () => sh.Position = shSpawnPos);
-			Timing.CallDelayed(1.0f, () => CheckPos(sh));
-			Timing.CallDelayed(1.3f, () => CheckPos(sh));
-			Timing.CallDelayed(1.8f, () => CheckPos(sh));
-			void CheckPos(Player pl)
-			{
-				if (Vector3.Distance(pl.Position, shSpawnPos) > 10) sh.Position = shSpawnPos;
-			}
 		}
 
 
@@ -91,7 +86,7 @@ namespace SerpentsHand
 			}
 		}
 		internal void PocketFail(PocketFailEscapeEvent ev)
-        {
+		{
 			if (!ev.Player.Tag.Contains(Tag)) return;
 			ev.Allowed = false;
 			List<Vector3> tp = new List<Vector3>();
@@ -122,7 +117,7 @@ namespace SerpentsHand
 			}
 		}
 		internal void Dead(DeadEvent ev)
-        {
+		{
 			if (ev.Target.Tag.Contains(Tag)) ev.Target.Tag = ev.Target.Tag.Replace(Tag, "");
 		}
 		internal void RoleChange(RoleChangeEvent ev)
