@@ -106,7 +106,7 @@ namespace SerpentsHand
 		{
 			if (ev.Target.Tag.Contains(Tag)) ev.Allowed = false;
 		}
-		internal void Damage(DamageEvent ev)
+		internal void Damage(DamageProcessEvent ev)
 		{
 			if (ev.Attacker.Id == 0) return;
 			if ((ev.Target.Tag.Contains(Tag) && (ev.Attacker.Team == Team.SCP || ev.DamageType == DamageTypes.Pocket)) ||

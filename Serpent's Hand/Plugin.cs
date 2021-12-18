@@ -10,7 +10,7 @@ namespace SerpentsHand
         public override int Priority => 1000;
         public override string Developer => "fydne";
         public override string Name => "Serpent's Hand";
-        public override Version Version => new Version(1, 0, 6);
+        public override Version Version => new Version(1, 0, 7);
         public override Version NeededQurreVersion => new Version(1, 10, 0);
         public override void Enable() => RegisterEvents();
         public override void Disable() => UnregisterEvents();
@@ -28,7 +28,7 @@ namespace SerpentsHand
             Qurre.Events.Scp106.PocketFailEscape += EventHandlers.PocketFail;
             Qurre.Events.Scp106.PocketEnter += EventHandlers.PocketEnter;
             Qurre.Events.Player.ScpAttack += EventHandlers.AntiScpAttack;
-            Qurre.Events.Player.Damage += EventHandlers.Damage;
+            Qurre.Events.Player.DamageProcess += EventHandlers.Damage;
             Qurre.Events.Player.Dead += EventHandlers.Dead;
             Qurre.Events.Player.RoleChange += EventHandlers.RoleChange;
             Qurre.Events.Player.Spawn += EventHandlers.Spawn;
@@ -44,7 +44,7 @@ namespace SerpentsHand
             Qurre.Events.Scp106.PocketFailEscape -= EventHandlers.PocketFail;
             Qurre.Events.Scp106.PocketEnter -= EventHandlers.PocketEnter;
             Qurre.Events.Player.ScpAttack -= EventHandlers.AntiScpAttack;
-            Qurre.Events.Player.Damage -= EventHandlers.Damage;
+            Qurre.Events.Player.DamageProcess -= EventHandlers.Damage;
             Qurre.Events.Player.Dead -= EventHandlers.Dead;
             Qurre.Events.Player.RoleChange -= EventHandlers.RoleChange;
             Qurre.Events.Player.Spawn -= EventHandlers.Spawn;
