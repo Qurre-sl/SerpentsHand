@@ -11,7 +11,7 @@ namespace SerpentsHand
         public override string Developer => "fydne";
         public override string Name => "Serpent's Hand";
         public override Version Version => new Version(1, 0, 7);
-        public override Version NeededQurreVersion => new Version(1, 10, 0);
+        public override Version NeededQurreVersion => new Version(1, 10, 4);
         public override void Enable() => RegisterEvents();
         public override void Disable() => UnregisterEvents();
         #endregion
