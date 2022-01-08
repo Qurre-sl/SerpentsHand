@@ -10,8 +10,8 @@ namespace SerpentsHand
         public override int Priority => 1000;
         public override string Developer => "fydne";
         public override string Name => "Serpent's Hand";
-        public override Version Version => new Version(1, 0, 7);
-        public override Version NeededQurreVersion => new Version(1, 10, 4);
+        public override Version Version => new Version(1, 0, 8);
+        public override Version NeededQurreVersion => new Version(1, 11, 0);
         public override void Enable() => RegisterEvents();
         public override void Disable() => UnregisterEvents();
         #endregion

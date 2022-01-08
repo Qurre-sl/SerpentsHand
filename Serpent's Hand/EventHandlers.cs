@@ -17,14 +17,11 @@ namespace SerpentsHand
 			for (int i = 0; i < list.Count && i < Cfg.Max_players; i++)
 				SpawnPlayer(list[i]);
 		}
-		private string Tag => " Serpent's Hand";
-		public void SpawnPlayer(Player sh)
+		private const string Tag = " Serpent's Hand";
+		public static void SpawnPlayer(Player sh)
 		{
-			Vector3 shSpawnPos = new Vector3(85.293f, 988.7609f, -68.15958f);
 			sh.Tag += Tag;
-			sh.BlockSpawnTeleport = true;
-			sh.Role = RoleType.Tutorial;
-			sh.Position = shSpawnPos;
+			sh.SetRole(RoleType.Tutorial, false, CharacterClassManager.SpawnReason.Respawn);
 			sh.ClearBroadcasts();
 			sh.Broadcast(Cfg.Spawn_bc_time, Cfg.Spawn_bc);
 			Timing.CallDelayed(0.5f, () =>
@@ -44,7 +41,6 @@ namespace SerpentsHand
 				}
 				sh.UnitName = Cfg.UnitName;
 			});
-			Timing.CallDelayed(0.3f, () => sh.Position = shSpawnPos);
 		}
 
 
@@ -123,18 +119,22 @@ namespace SerpentsHand
 		}
 		internal void RoleChange(RoleChangeEvent ev)
 		{
-			if (ev.Player.Tag.Contains(Tag)) ev.Player.Tag = ev.Player.Tag.Replace(Tag, "");
+			if (ev.NewRole != RoleType.Tutorial && ev.Player.Tag.Contains(Tag)) ev.Player.Tag = ev.Player.Tag.Replace(Tag, "");
 		}
 		internal void Spawn(SpawnEvent ev)
 		{
-			if (ev.Player.Tag.Contains(Tag)) ev.Player.Tag = ev.Player.Tag.Replace(Tag, "");
+			if (ev.Player.Tag.Contains(Tag))
+            {
+				if(ev.RoleType != RoleType.Tutorial) ev.Player.Tag = ev.Player.Tag.Replace(Tag, "");
+				else ev.Position = new Vector3(85.293f, 988.7609f, -68.15958f);
+			}
 		}
 		internal void AddTarget(AddTargetEvent ev)
 		{
 			if (!ev.Target.Tag.Contains(Tag)) return;
 			ev.Allowed = false;
 		}
-		public void Check(CheckEvent ev)
+		internal void Check(CheckEvent ev)
 		{
 			Player scp035 = null;
 			try { scp035 = Player.List.Where(x => x.Tag.Contains(" scp035")).First(); } catch { }
